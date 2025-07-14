@@ -48,6 +48,7 @@ $result = mysqli_query($bdd, $query);
         </form>
         <div class="text-center mt-4">
             <a href="index.php" class="btn btn-lg rounded-5 btn-outline-danger">Retour à l'accueil</a>
+            <a href="membres.php" class="btn btn-lg rounded-5 btn-outline-danger">voir les membres</a>
         </div>
 
         <div class="row justify-content-center">

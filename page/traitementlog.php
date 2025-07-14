@@ -1,13 +1,12 @@
 <?php
 session_start();
-require('../inc/connexion.php'); // ici se trouve la fonction dbconnect()
+require('../inc/connexion.php'); 
 
 $bdd = dbconnect(); // <-- appel de la fonction
 
 $email = $_POST['email'];
 $mdp = $_POST['mdp'];
 
-// Tu devrais aussi sécuriser les données (ex: éviter injection SQL)
 $email = mysqli_real_escape_string($bdd, $email);
 $mdp = mysqli_real_escape_string($bdd, $mdp);
 
