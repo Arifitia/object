@@ -1,5 +1,7 @@
-create table EXAM_S2_membre (
-    id_membre INT,
+
+
+CREATE TABLE EXAM_S2_membre (
+    id_membre INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(50),
     date_naissance DATE,
     genre VARCHAR(10),
@@ -9,30 +11,35 @@ create table EXAM_S2_membre (
     image_profil VARCHAR(255)
 );
 
-create table EXAM_S2_categorie_objet(
-    id_categorie INT,
-    nom_categorie VARCHAR (255)
+CREATE TABLE EXAM_S2_categorie_objet (
+    id_categorie INT AUTO_INCREMENT PRIMARY KEY,
+    nom_categorie VARCHAR(255)
 );
 
-create table EXAM_S2_objet(
-    id_objet INT,
+CREATE TABLE EXAM_S2_objet (
+    id_objet INT AUTO_INCREMENT PRIMARY KEY,
     nom_objet VARCHAR(100),
     id_categorie INT,
-    id_membre INT
+    id_membre INT,
+    FOREIGN KEY (id_categorie) REFERENCES EXAM_S2_categorie_objet(id_categorie),
+    FOREIGN KEY (id_membre) REFERENCES EXAM_S2_membre(id_membre)
 );
 
-create table EXAM_S2_images_objet(
-    id_image INT,
+CREATE TABLE EXAM_S2_images_objet (
+    id_image INT AUTO_INCREMENT PRIMARY KEY,
     id_objet INT,
     nom_image VARCHAR(255),
+    FOREIGN KEY (id_objet) REFERENCES EXAM_S2_objet(id_objet)
 );
 
-create table EXAM_S2_emprunt(
-    id_emprunt INT,
+CREATE TABLE EXAM_S2_emprunt (
+    id_emprunt INT AUTO_INCREMENT PRIMARY KEY,
     id_objet INT,
     id_membre INT,
     date_emprunt DATE,
-    date_retour DATE
+    date_retour DATE,
+    FOREIGN KEY (id_objet) REFERENCES EXAM_S2_objet(id_objet),
+    FOREIGN KEY (id_membre) REFERENCES EXAM_S2_membre(id_membre)
 );
 
 
