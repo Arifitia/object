@@ -10,3 +10,14 @@ Insérer les données de test
 4 catégories ( esthétique, bricolage, mécanique , cuisine )
 10 objets par membre à répartir sur les catégories
 10 emprunts
+
+
+Page à créer
+Login
+        formulaire nom et mot de passe
+        bouton submit makany traitementlog
+
+inscription
+        formulaire nom,email,mot de passe, date de naissance,
+Liste des objets , (avec date de retour si emprunt en cours )
+Filtre par catégorie 
