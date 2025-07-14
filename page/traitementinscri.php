@@ -8,6 +8,7 @@ $bdd = mysqli_connect('172.60.0.15', 'ETU004197', '2HjGqrOI', 'db_s2_ETU004197')
     $email = $_POST['email'];
     $ville = $_POST['ville'];
     $mdp =$_POST['mdp'];
+    $user=$_SESSION['id_membre'];
 
     $query = "INSERT INTO EXAM_S2_membre (nom, date_naissance, genre, email, ville, mdp, image_profil) 
               VALUES ('$nom', '$date_naissance', '$genre', '$email', '$ville', '$mdp', '')";
