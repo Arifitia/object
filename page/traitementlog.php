@@ -1,15 +1,23 @@
 <?php
 session_start();
-$bdd = mysqli_connect('172.60.0.15', 'ETU004197', '2HjGqrOI', 'db_s2_ETU004197');
+require('../inc/connexion.php'); // ici se trouve la fonction dbconnect()
 
-    $email = $_POST['email'];
-    $mdp = $_POST['mdp'];
+$bdd = dbconnect(); // <-- appel de la fonction
 
-    $query = "SELECT * FROM EXAM_S2_membre WHERE email='$email' AND mdp='$mdp'";
-    $result = mysqli_query($bdd, $query);
-    $user = mysqli_fetch_assoc($result);
+$email = $_POST['email'];
+$mdp = $_POST['mdp'];
+
+// Tu devrais aussi sécuriser les données (ex: éviter injection SQL)
+$email = mysqli_real_escape_string($bdd, $email);
+$mdp = mysqli_real_escape_string($bdd, $mdp);
+
+$query = "SELECT * FROM EXAM_S2_membre WHERE email='$email' AND mdp='$mdp'";
+$result = mysqli_query($bdd, $query);
+
+if ($user = mysqli_fetch_assoc($result)) {
     $_SESSION['id_membre'] = $user['id_membre'];
     header("Location: liste.php");
     exit;
-    
-?>
+} else {
+    echo "Email ou mot de passe incorrect.";
+}

@@ -1,7 +1,7 @@
 <?php
 session_start();
-$bdd = mysqli_connect('172.60.0.15', 'ETU004197', '2HjGqrOI', 'db_s2_ETU004197');
-
+require('../inc/connexion.php');
+    $bdd = dbconnect(); 
     $nom = $_POST['nom'];
     $date_naissance = $_POST['date_naissance'];
     $genre = $_POST['genre'];

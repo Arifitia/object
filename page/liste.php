@@ -1,8 +1,8 @@
 <?php
 session_start();
-$bdd = mysqli_connect('172.60.0.15', 'ETU004197', '2HjGqrOI', 'db_s2_ETU004197');
-
+require('../inc/connexion.php');
 $categorie_id = isset($_GET['categorie']) ? (int)$_GET['categorie'] : 0;
+$bdd = dbconnect(); 
 
 $categories = mysqli_query($bdd, "SELECT id_categorie, nom_categorie FROM EXAM_S2_categorie_objet");
 
