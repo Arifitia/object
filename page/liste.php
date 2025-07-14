@@ -2,15 +2,20 @@
 session_start();
 $bdd = mysqli_connect('172.60.0.15', 'ETU004197', '2HjGqrOI', 'db_s2_ETU004197');
 
-// Requête : tous les objets, avec leur propriétaire et la date de retour SI elle est à venir
+$categorie_id = isset($_GET['categorie']) ? (int)$_GET['categorie'] : 0;
+
+$categories = mysqli_query($bdd, "SELECT id_categorie, nom_categorie FROM EXAM_S2_categorie_objet");
+
 $query = "
 SELECT o.nom_objet, m.nom, e.date_retour 
 FROM EXAM_S2_objet AS o 
 JOIN EXAM_S2_membre AS m ON o.id_membre = m.id_membre 
-LEFT JOIN EXAM_S2_emprunt AS e 
-    ON o.id_objet = e.id_objet 
-    AND e.date_retour >= CURDATE()
+LEFT JOIN EXAM_S2_emprunt AS e ON o.id_objet = e.id_objet AND e.date_retour >= CURDATE()
 ";
+
+if ($categorie_id > 0) {
+    $query .= " WHERE o.id_categorie = $categorie_id";
+}
 
 $result = mysqli_query($bdd, $query);
 ?>
@@ -19,20 +24,29 @@ $result = mysqli_query($bdd, $query);
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des objets</title>
     <link rel="stylesheet" href="../assets/css/css/bootstrap.min.css">
     <script src="../assets/css/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="../assets/css/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
-            <h1 class="mt-5 display-6 text-center">Liste des objets</h1>
-        </div>
+        <h1 class="mt-5 display-6 text-center">Liste des objets</h1>
+
+        <form method="get" class="text-center mt-3">
+            <label for="categorie" class="form-label">Filtrer par catégorie :</label>
+            <select name="categorie" id="categorie" class="form-select w-25 d-inline" onchange="this.form.submit()">
+                <option value="0">-- Toutes les catégories --</option>
+                <?php while ($cat = mysqli_fetch_assoc($categories)) { ?>
+                    <option value="<?= $cat['id_categorie'] ?>" <?= $cat['id_categorie'] == $categorie_id ? 'selected' : '' ?>>
+                        <?= $cat['nom_categorie'] ?>
+                    </option>
+                <?php } ?>
+            </select>
+        </form>
+
         <div class="row justify-content-center">
-            <table class="shadow-lg table table-striped table-danger table-hover text-center mt-5" style="width: 70%;">
+            <table class="shadow-lg table table-striped table-danger table-hover text-center mt-4" style="width: 70%;">
                 <thead>
                     <tr>
                         <th class="bg bg-danger lead text-white">Propriétaire</th>
